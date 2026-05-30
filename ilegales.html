@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Normativa Ilegales — Pixeled Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f18;
+    --bg3: #141422;
+    --bg4: #1a1a2e;
+    --purple: #8b5cf6;
+    --purple-light: #a78bfa;
+    --purple-dim: #6d28d9;
+    --purple-glow: rgba(139,92,246,0.15);
+    --purple-border: rgba(139,92,246,0.35);
+    --text: #e8e6f0;
+    --text-muted: #9991b8;
+    --text-dim: #6b6489;
+    --white: #ffffff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; font-size:15px; line-height:1.7; min-height:100vh; }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--bg2); }
+  ::-webkit-scrollbar-thumb { background:var(--purple-dim); border-radius:3px; }
+  header { background:var(--bg2); border-bottom:1px solid var(--purple-border); position:sticky; top:0; z-index:100; }
+  .header-inner { max-width:1100px; margin:0 auto; padding:0 2rem; height:64px; display:flex; align-items:center; justify-content:space-between; }
+  .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .hero { background:var(--bg2); border-bottom:1px solid var(--purple-border); padding:3.5rem 2rem 3rem; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:600px; height:300px; background:radial-gradient(ellipse,rgba(139,92,246,0.12) 0%,transparent 70%); pointer-events:none; }
+  .hero-label { display:inline-block; background:var(--purple-glow); border:1px solid var(--purple-border); color:var(--purple-light); padding:5px 16px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1.5rem; }
+  .hero h1 { font-family:'Rajdhani',sans-serif; font-size:clamp(2.4rem,6vw,4rem); font-weight:700; color:#fff; letter-spacing:2px; line-height:1.1; margin-bottom:1.2rem; }
+  .hero h1 span { color:var(--purple-light); }
+  .hero p { max-width:560px; margin:0 auto 2rem; color:var(--text-muted); font-size:15px; line-height:1.8; }
+  .layout { max-width:1100px; margin:0 auto; padding:3rem 2rem; display:grid; grid-template-columns:260px 1fr; gap:2.5rem; align-items:start; }
+  .sidebar { position:sticky; top:80px; }
+  .sidebar-title { font-size:10px; font-weight:600; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; padding-left:4px; }
+  .nav-chapter { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; color:var(--text-muted); font-size:13px; font-weight:500; text-decoration:none; transition:all 0.2s; cursor:pointer; margin-bottom:2px; }
+  .nav-chapter:hover { background:var(--purple-glow); color:var(--purple-light); }
+  .nav-chapter.active { background:var(--purple-glow); color:var(--purple-light); border-left:2px solid var(--purple); padding-left:10px; }
+  .nav-dot { width:6px; height:6px; border-radius:50%; background:var(--purple-dim); flex-shrink:0; }
+  .nav-chapter.active .nav-dot { background:var(--purple-light); }
+  .section { margin-bottom:3.5rem; scroll-margin-top:90px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid rgba(139,92,246,0.2); }
+  .section-num { background:linear-gradient(135deg,#6d28d9,#8b5cf6); color:white; font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .section-header h2 { font-family:'Rajdhani',sans-serif; font-size:1.5rem; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; }
+  .rule-card { background:var(--bg3); border:1px solid rgba(255,255,255,0.06); border-radius:12px; overflow:hidden; margin-bottom:1rem; transition:border-color 0.2s; }
+  .rule-card:hover { border-color:var(--purple-border); }
+  .rule-header { display:flex; align-items:center; gap:12px; padding:1rem 1.4rem; cursor:pointer; user-select:none; }
+  .rule-id { font-family:'Rajdhani',sans-serif; font-size:12px; font-weight:600; color:var(--purple); background:rgba(139,92,246,0.1); padding:2px 8px; border-radius:4px; flex-shrink:0; letter-spacing:0.5px; }
+  .rule-title { font-weight:600; font-size:14px; color:var(--text); flex:1; }
+  .rule-toggle { color:var(--text-dim); transition:transform 0.25s; flex-shrink:0; }
+  .rule-toggle.open { transform:rotate(180deg); }
+  .rule-body { display:none; padding:0 1.4rem 1.4rem; }
+  .rule-body.open { display:block; border-top:1px solid rgba(255,255,255,0.05); padding-top:1.1rem; }
+  .rule-body p { color:var(--text-muted); font-size:14px; margin-bottom:0.8rem; line-height:1.75; }
+  .rule-body p:last-child { margin-bottom:0; }
+  .rule-body strong { color:var(--text); font-weight:600; }
+  .examples-label { font-size:11px; font-weight:600; color:var(--purple-light); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:0.6rem; display:block; margin-top:0.8rem; }
+  .example-list { list-style:none; margin-bottom:1rem; }
+  .example-list li { display:flex; align-items:flex-start; gap:8px; padding:5px 0; color:var(--text-muted); font-size:13.5px; line-height:1.6; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .example-list li:last-child { border-bottom:none; }
+  .example-list li::before { content:'›'; color:var(--purple); font-size:16px; flex-shrink:0; margin-top:1px; font-weight:600; }
+  .subsection { background:var(--bg4); border:1px solid rgba(255,255,255,0.05); border-radius:10px; padding:1.2rem 1.4rem; margin-bottom:0.8rem; }
+  .subsection-title { font-family:'Rajdhani',sans-serif; font-size:14px; font-weight:700; color:var(--purple-light); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:0.7rem; display:flex; align-items:center; gap:8px; }
+  .subsection-title span.num { font-size:11px; color:var(--purple-dim); font-weight:600; }
+  .subsection p { color:var(--text-muted); font-size:13.5px; line-height:1.75; }
+  .warn-box { background:rgba(139,92,246,0.08); border:1px solid rgba(139,92,246,0.25); border-left:3px solid var(--purple); border-radius:8px; padding:1rem 1.2rem; margin:1.2rem 0; }
+  .warn-box p { color:var(--text-muted); font-size:13.5px; line-height:1.75; margin:0; }
+  .warn-box p strong { color:var(--purple-light); }
+  .danger-box { background:rgba(220,38,38,0.07); border:1px solid rgba(220,38,38,0.2); border-left:3px solid #dc2626; border-radius:8px; padding:1rem 1.2rem; margin:1.2rem 0; }
+  .danger-box p { color:var(--text-muted); font-size:13.5px; line-height:1.75; margin:0; }
+  .danger-box strong { color:#f87171; }
+  .final-note { background:linear-gradient(135deg,var(--bg3),var(--bg4)); border:1px solid var(--purple-border); border-radius:14px; padding:2.2rem 2.5rem; text-align:center; margin-top:3rem; }
+  .final-note h3 { font-family:'Rajdhani',sans-serif; font-size:1.2rem; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.8rem; }
+  .final-note p { color:var(--text-muted); font-size:14px; max-width:600px; margin:0 auto; line-height:1.8; }
+  .final-note p strong { color:var(--purple-light); }
+  footer { background:var(--bg2); border-top:1px solid rgba(255,255,255,0.06); padding:2rem; text-align:center; }
+  footer p { color:var(--text-dim); font-size:12px; }
+  footer span { color:var(--purple-light); }
+  .expand-btn { background:var(--purple-glow); border:1px solid var(--purple-border); color:var(--purple-light); padding:7px 18px; border-radius:8px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.2s; font-family:'Rajdhani',sans-serif; }
+  .expand-btn:hover { background:rgba(139,92,246,0.2); border-color:var(--purple); }
+  .top-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; flex-wrap:wrap; gap:1rem; }
+  .top-bar-label { font-size:12px; color:var(--text-dim); }
+  .top-bar-label span { color:var(--purple-light); font-weight:600; }
+  @media (max-width:768px) {
+    .layout { grid-template-columns:1fr; padding:2rem 1rem; }
+    .sidebar { position:static; display:none; }
+    .hero { background:var(--bg2); border-bottom:1px solid var(--purple-border); padding:3.5rem 2rem 3rem; text-align:center; position:relative; overflow:hidden; }
+    .header-inner { padding:0 1rem; }
+  }
+  .hero-stats { display:flex; align-items:center; justify-content:center; gap:0; margin-top:2rem; background:var(--bg3); border:1px solid var(--purple-border); border-radius:14px; overflow:hidden; max-width:420px; margin-left:auto; margin-right:auto; }
+  .hero-stat { flex:1; padding:1.1rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .hero-stat-div { width:1px; background:var(--purple-border); align-self:stretch; }
+  .stat-num { font-family:'Rajdhani',sans-serif; font-size:1.6rem; font-weight:700; color:var(--purple-light); line-height:1; }
+  .stat-label { font-size:11px; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; }
+
+  /* Extra for heist tables */
+  .heist-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:0.8rem; }
+  .heist-card { background:var(--bg4); border:1px solid var(--purple-border); border-radius:10px; padding:1.1rem 1.3rem; }
+  .heist-card-title { font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; color:var(--purple-light); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.8rem; display:flex; align-items:center; gap:6px; }
+  .heist-stat { display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:13px; }
+  .heist-stat:last-child { border-bottom:none; }
+  .heist-stat .label { color:var(--text-dim); }
+  .heist-stat .value { color:var(--text); font-weight:600; }
+  .heist-icon { font-size:14px; }
+  .ck-table { width:100%; border-collapse:collapse; margin-top:0.8rem; font-size:13.5px; }
+  .ck-table th { background:rgba(139,92,246,0.15); color:var(--purple-light); padding:8px 12px; text-align:left; font-family:'Rajdhani',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; border-bottom:1px solid var(--purple-border); }
+  .ck-table td { padding:9px 12px; color:var(--text-muted); border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:top; }
+  .ck-table tr:last-child td { border-bottom:none; }
+  .ck-table tr:hover td { background:rgba(139,92,246,0.04); }
+  .tag-ok { background:rgba(34,197,94,0.12); color:#4ade80; border:1px solid rgba(34,197,94,0.25); padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .tag-req { background:rgba(139,92,246,0.12); color:var(--purple-light); border:1px solid var(--purple-border); padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .tag-ban { background:rgba(220,38,38,0.12); color:#f87171; border:1px solid rgba(220,38,38,0.25); padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+  .wait-box { display:flex; gap:1rem; margin-top:0.8rem; flex-wrap:wrap; }
+  .wait-item { flex:1; min-width:160px; background:var(--bg4); border:1px solid var(--purple-border); border-radius:10px; padding:1rem 1.2rem; text-align:center; }
+  .wait-item .days { font-family:'Rajdhani',sans-serif; font-size:2rem; font-weight:700; color:var(--purple-light); line-height:1; }
+  .wait-item .wlabel { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+  .wait-item .wtype { font-size:12px; color:var(--text-muted); margin-top:6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <img src="data:image/png;base64,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" alt="Pixeled Community" style="height:36px; image-rendering:pixelated;">
+      <span style="font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; color:var(--purple-light); letter-spacing:2px; text-transform:uppercase;">Pixeled Community</span>
+    </a>
+    <div class="tier-badge" style="background:rgba(220,38,38,0.12); border-color:rgba(220,38,38,0.35); color:#f87171;">Normativa Ilegales</div>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABgAGADASIAAhEBAxEB/8QAGwABAQADAQEBAAAAAAAAAAAAAAYEBQcCAwj/xAAuEAABBAIBAgUDAwUBAAAAAAABAAIDBAURBhJBEyEiMWEUI1EHMoEVFkJxkaH/xAAYAQEBAQEBAAAAAAAAAAAAAAAABAMCBf/EACkRAAEEAAYCAgICAwAAAAAAAAEAAgMRBAUSITFBE1FxgSJhFKEVI0L/2gAMAwEAAhEDEQA/APxkiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIirf01jZJdth8bXgMZ7t3/mPgrZ0I7krLzOQVWQUAwaf4IZ5dTe7W79tL3cLkpxEDJddar62FezewPwvYw+UmaFkmqtV9bCvZvZc/RXHAJRPNap9EUleFwMW4wT5v7npJK8cQvRWsxdbc8Dx5ehkTPCA6unfsA09khydkrYT5a8hI44r7332HtIsrZIIj5K12OOK+/ew9qKRW/EqMuJF6zl6v08OmEPlZsfu/0fyFkYtln+zGS4+syW1t3R9oO39w792/j5XUGROkYC9xBLXOqt/xIHFjnpdQ5O57QXOo041W+xri++lAIq7DWMhZ5VXq5SvEySFknoELW62zfmAPPstRzFoZyW61rQ0B48gNa9I+Aop8vEeHM7XGtWmiKPF+z8UpJsEGQeYO21aaIo8X7PwtQiv6bLbeFVZMdVZLa6Rr7IcSOp+/dv4+VgYCxetcp8DJwRNlgglBYIWt0SN+YAVjslDXRNLzcmmvx236u+QqjlIaY2lxt9f87b/u+VHor2tdms8uuYmWOA1miUBogaHDQPfp33KkeQ1oqWbt1YGlsUUha0E7IH8qXGZaMPF5WPsai07VuPs7KfFYAQx+RrrGot4rcfZ2W34DepUbdl9yeOFrmMDS/vpwP4K0NueR88upnuY5x16jojax0U8mNe/Dsg6bf9+1g/FvfAyHpt/2q3gtjHY9ktm3kK7HTab4Tgdt073/AGkea98XsYvG5G949+tI1/Q6OTpOjvZIG2n22tVwSvjLXLcdXzLmtovkIk6ndLSek9IJ/Bdofyug1MUxxsvm4xxpvIh4IGPbO0wiuS/xJOnr6WuGo/ZxPq3pWwZy+FsQawf67rnvm9/tVw5q6JsYawfhdc989qN4VkadeW6MjaY1j+joEvmDonfYrJqXMdNxFuPdk4Ks5J83A7b9wns3ft8q7yGN/T2vmKn0FHGWalIV3ROdYOrTZrb43eL5+rpYGu7eXuvtaxnAo+ZVmMxeHdWr2sfTLPqPtSssMc6SR46vNzC0jewB1jfsNoM6liiEWkEAOHfDiCe/1skOayRxiPSCAHDvhxs9rmGHbRxmer2JMvXsscyQPeA70+nQ3sd9r1naeMv5SxdjztJjZDsMLXb9tdm/H/q6LiMFxGrm8vlLVHEy4qeqx+HbLOCyWRldzpB0h3UPW3z3rfZYzKfGz+n9nM4bj2IlkbiI7Lm3ZWvkin+se17QOsEjwgdDW9AH3WX+Sb4TAYhpvVVu5qvdrP8AnjxGExjTd8nmq9qOit4+zxCvjzlIKtgNGy7expzjryb8jv3WJg/oMXnmTS5avZY+GQOkAdoHWgDsd1W5V/GczyCnx84jC4uK7jKswvUm9JgndCyWTe3EEEhzddtrnOetVLuXsWaFJtGq932oGnYY0DXv+TrZ+StDm7i6N5YNTKAO/X6ul2c0cXMeWC2VR36+6VPDJiq/I7WY/q9SRkgkLYg078wdD9uvx/1S2Zttv5SxcYwxtmeXBp1sf8WGiwxeYvxEfj0hosu2vk/JKxxOOdOzRpAFk7XyflERF5yhREREREREREREREREREREREREREREREREREREREREREREX//Z" alt="Pixeled Community" style="height:80px; image-rendering:pixelated; margin-bottom:1.5rem; display:block; margin-left:auto; margin-right:auto;">
+  <div class="hero-label">Servidor +18 · Roleplay Serio</div>
+  <h1>Normativa <span>Ilegales</span></h1>
+  <p>Reglamento oficial para organizaciones criminales, actos delictivos, robos y bandas de Pixeled Community. De obligado cumplimiento para todos los jugadores.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="stat-num">6</span><span class="stat-label">Capítulos</span></div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Tipos de Robo</span></div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat"><span class="stat-num">+18</span><span class="stat-label">Servidor</span></div>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <nav>
+      <a class="nav-chapter active" href="#cap1"><div class="nav-dot"></div> 1. Normas Básicas</a>
+      <a class="nav-chapter" href="#cap2"><div class="nav-dot"></div> 2. Tipos de CK</a>
+      <a class="nav-chapter" href="#cap3"><div class="nav-dot"></div> 3. Robos</a>
+      <a class="nav-chapter" href="#cap4"><div class="nav-dot"></div> 4. Proyecto y Banda</a>
+      <a class="nav-chapter" href="#cap5"><div class="nav-dot"></div> 5. Sanciones para Bandas</a>
+      <a class="nav-chapter" href="#cap6"><div class="nav-dot"></div> 6. Normativa General Bandas</a>
+    </nav>
+    <div style="margin-top:1.5rem; background:rgba(220,38,38,0.07); border:1px solid rgba(220,38,38,0.25); border-radius:12px; padding:1.2rem 1.4rem; text-align:center;">
+      <div style="font-size:24px; margin-bottom:0.5rem;">⚠️</div>
+      <h3 style="font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:700; color:#f87171; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.5rem;">Obligatorio Grabar</h3>
+      <p style="font-size:12px; color:var(--text-muted); line-height:1.6;">Todos los integrantes deben grabar durante actos delictivos. 3 infracciones = strike permanente.</p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top-bar">
+      <p class="top-bar-label">Mostrando <span>6 capítulos</span> · Normativa vigente 2025</p>
+      <button class="expand-btn" onclick="toggleAll()">Expandir todo</button>
+    </div>
+
+    <!-- CAP 1 -->
+    <section class="section" id="cap1">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <h2>Normas Básicas</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">1.1</span><span class="rule-title">Actos Delictivos</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Se deberán respetar los caminos delimitados en cualquier rol que implique una persecución.</li>
+          <li>Está prohibido usar vehículos de trabajo para realizar actos ilegales.</li>
+          <li>Queda totalmente prohibido realizar actos delictivos (robos a establecimientos, coches de importación, furgón y similares) en los <strong>30 minutos previos</strong> a un reinicio programado y los <strong>15 minutos posteriores</strong>.</li>
+          <li>Los secuestros pueden durar como máximo <strong>30 minutos</strong>, aunque podrán alargarse si el rol lo exige.</li>
+          <li>No se podrá robar nada a la policía (comida, chalecos, armamento, munición...) en ningún momento. Solo se permite coger el arma del policía si no hay munición y la situación de rol lo requiere; deberá desecharse al finalizar el rol.</li>
+          <li>Está prohibido obligar a una persona a sacar dinero del banco.</li>
+          <li>No se podrá atracar a alguien mientras se encuentre en el menú de una tienda de ropa o cajero.</li>
+          <li>No se podrá robar los materiales de los trabajadores mientras estén trabajando, en el punto de venta o procesado del material.</li>
+          <li>No está permitido robar o secuestrar a un trabajador en su zona de trabajo si realiza su trabajo de forma no conflictiva y con rol previo.</li>
+          <li>Queda terminantemente prohibido realizar roles agresivos (verbales o físicos) en eventos organizados por la administración.</li>
+          <li>Está prohibido abusar de la tercera persona en roles agresivos.</li>
+          <li>Queda prohibido regresar a una zona en la que hayas sido abatido hasta pasados <strong>40 minutos</strong>.</li>
+          <li>Ningún jugador podrá realizar un rol agresivo hacia un LSMD de servicio. Solo se permitirá con un rol previo de peso y permiso de la administración.</li>
+        </ul>
+        <div class="warn-box"><p><strong>Rescates en secuestros:</strong> de 10.000$ a 15.000$ por civil, y de 15.000$ a 20.000$ por policía, siempre colaborando con el rol de negociación y respetando el Fair Play.</p></div>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">1.2</span><span class="rule-title">Policía Disponible</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <p>El estado de la policía se puede consultar en el menú ESC. También se deberá preguntar por disponibilidad usando el comando <strong>/ayuda</strong> en el chat.</p>
+        <ul class="example-list">
+          <li>No se pueden realizar actos delictivos si no hay <strong>2 o más policías</strong> de servicio (excepto en zonas calientes y reuniones de bandas).</li>
+          <li>Para secuestrar a un policía deben estar de servicio <strong>mínimo 5 policías</strong>.</li>
+          <li>Antes de realizar un robo medio o superior, se deberá usar el <strong>/ayuda</strong>, describir el robo a realizar y esperar el OK de la policía.</li>
+        </ul>
+        <div class="subsection"><div class="subsection-title"><span class="num">1.2.1</span> Drogas</div>
+          <ul class="example-list">
+            <li>No se podrá vender droga en el aeropuerto, frente a comisarías, en caminos secundarios ni en zonas alejadas de Los Santos, Sandy o Paleto.</li>
+            <li>Se considera falta de Fair Play vender droga a NPCs subido en tu propio vehículo y puede conllevar sanciones graves.</li>
+            <li>Está prohibido vender droga a un NPC al que ya le ha vendido un compañero.</li>
+            <li>Será sancionada cualquier persona que detenga vehículos en movimiento para venderles droga. Solo se puede vender a personas que estén a pie.</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">1.3</span><span class="rule-title">Uso de Armas</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <div class="subsection"><div class="subsection-title"><span class="num">1.3.1</span> Rol Previo</div>
+          <p>No se puede abrir fuego sin un rol previo. Siempre debe existir un rol previo de peso para realizar un rol agresivo con armas de fuego o blancas, a excepción de las zonas calientes.</p>
+        </div>
+        <div class="subsection"><div class="subsection-title"><span class="num">1.3.2</span> Principio de Reacción</div>
+          <p>El agresor, antes de abrir fuego o usar un arma blanca, deberá dar tiempo suficiente para que la víctima pueda reaccionar y ejecutar las indicaciones solicitadas.</p>
+        </div>
+        <div class="subsection"><div class="subsection-title"><span class="num">1.3.3</span> Uso de Armas en Vehículos</div>
+          <p>El uso de armas en vehículos está permitido en todos los casos.</p>
+        </div>
+        <div class="subsection"><div class="subsection-title"><span class="num">1.3.4</span> Porte de Armas</div>
+          <p>El porte de armas de fuego en la calle está <strong>totalmente prohibido IC</strong>. La policía podrá detener al infractor aunque este tenga licencia de caza.</p>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- CAP 2 -->
+    <section class="section" id="cap2">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <h2>Tipos de CK</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">2.1</span><span class="rule-title">CK Policial (Cadena Perpetua)</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <p>El CK Policial consiste en la condena a cadena perpetua, lo que implica la pérdida del personaje y todas sus pertenencias. Una vez aplicado, se contactará con un administrador para crear una nueva identidad.</p>
+        <div class="subsection"><div class="subsection-title"><span class="num">2.1.1</span> CK Policial a Civiles</div>
+          <ul class="example-list">
+            <li>Si el detenido acumula <strong>más de 100.000$</strong> en multas en el momento de la detención → cadena perpetua directa.</li>
+            <li>Si acumula <strong>menos de 100.000$</strong> pero tras ser procesado la cantidad supera los 100.000$, dispondrá de <strong>20 minutos</strong> para abonar el 50% de las multas y evitar la cadena perpetua.</li>
+          </ul>
+        </div>
+        <div class="subsection"><div class="subsection-title"><span class="num">2.1.2</span> CK Policial a Bandas</div>
+          <ul class="example-list">
+            <li>Mismas condiciones económicas que para civiles (umbral de 100.000$ en multas).</li>
+            <li>Los integrantes podrán iniciar un tiroteo contra la policía sin consecuencia de CK si están en <strong>persecución sin opción de escapar</strong>, o si portan dinero negro o sustancias ilegales por valor superior a <strong>10.000€</strong>, o llevan armas largas.</li>
+          </ul>
+        </div>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">2.2</span><span class="rule-title">CK de Grupos Criminales (Bandas)</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <div class="subsection"><div class="subsection-title"><span class="num">2.2.1</span> CK a Policía</div>
+          <p>Un grupo criminal podrá realizar un CK a un miembro de la policía si se cumplen <strong>todas</strong> las siguientes condiciones:</p>
+          <ul class="example-list">
+            <li>Existen motivos de peso probados que pongan en peligro la continuidad del grupo criminal.</li>
+            <li>Existe una investigación que justifique el CK, con pruebas gráficas obtenidas IC demostrables.</li>
+          </ul>
+        </div>
+        <div class="subsection"><div class="subsection-title"><span class="num">2.2.2</span> CK a Civiles e Integrantes de Otras Bandas</div>
+          <p>Un grupo criminal podrá realizar un CK a un civil o miembro de otra banda si se cumplen <strong>todas</strong> las siguientes condiciones:</p>
+          <ul class="example-list">
+            <li>Existen motivos de peso que pongan en peligro la continuidad o los intereses del grupo criminal.</li>
+            <li>Existe una investigación que justifique el CK, con pruebas gráficas obtenidas IC demostrables.</li>
+          </ul>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- CAP 3 -->
+    <section class="section" id="cap3">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <h2>Robos</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">3.1</span><span class="rule-title">Robos Pequeños — Civiles y Bandas</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <span class="examples-label">Tipos incluidos</span>
+        <ul class="example-list">
+          <li>Badulaques, tiendas y licorerías.</li>
+          <li>Robos de coches.</li>
+          <li>Casas.</li>
+          <li>Peluquerías.</li>
+          <li>Tiendas de tatuaje.</li>
+        </ul>
+        <div class="heist-grid">
+          <div class="heist-card">
+            <div class="heist-card-title"><span class="heist-icon">👮</span> Policías</div>
+            <div class="heist-stat"><span class="label">Mínimo</span><span class="value">2</span></div>
+            <div class="heist-stat"><span class="label">Máximo</span><span class="value">4</span></div>
+            <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+          </div>
+          <div class="heist-card">
+            <div class="heist-card-title"><span class="heist-icon">🔫</span> Armamento</div>
+            <div class="heist-stat"><span class="label">Tiradores</span><span class="value">No permitido</span></div>
+            <div class="heist-stat"><span class="label">Armas</span><span class="value">Blancas / bajo calibre</span></div>
+            <div class="heist-stat"><span class="label">Rehenes</span><span class="value">Máx. libre (reales/NPC)</span></div>
+          </div>
+          <div class="heist-card">
+            <div class="heist-card-title"><span class="heist-icon">📋</span> Condiciones</div>
+            <div class="heist-stat"><span class="label">Civiles (semanal)</span><span class="value">Máx. 7 robos</span></div>
+            <div class="heist-stat"><span class="label">/ayuda previo</span><span class="value">No necesario</span></div>
+            <div class="heist-stat"><span class="label">Sin policía (espera)</span><span class="value">10 min. y sales</span></div>
+          </div>
+        </div>
+        <div class="warn-box"><p><strong>Robos a casas:</strong> si la casa cuenta con punto de robo, no se permitirá robar ni secuestrar al propietario siempre que este se retire de forma no conflictiva.</p></div>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">3.2</span><span class="rule-title">Robos para Bandas</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <div class="subsection"><div class="subsection-title">3.2.1 — Robos Medios</div>
+          <div class="heist-grid">
+            <div class="heist-card">
+              <div class="heist-card-title">🏪 Ammunation</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">4 – 6</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">No</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Fuego (obligatorio)</span></div>
+              <div class="heist-stat"><span class="label">Rehenes</span><span class="value">Máx. 4</span></div>
+              <div class="heist-stat"><span class="label">Bloqueos</span><span class="value">1</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">💎 Joyería Vangelico</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">4 – 6</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Pistolas / calibre medio</span></div>
+              <div class="heist-stat"><span class="label">Rehenes</span><span class="value">Máx. 4</span></div>
+              <div class="heist-stat"><span class="label">Negociación</span><span class="value">Por radio</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">🏦 Sucursal Fleeca</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">4 – 8</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Bajo / medio calibre</span></div>
+              <div class="heist-stat"><span class="label">Rehenes</span><span class="value">Máx. 4</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="subsection" style="margin-top:1rem;"><div class="subsection-title">3.2.2 — Robos Grandes</div>
+          <div class="heist-grid">
+            <div class="heist-card">
+              <div class="heist-card-title">🏦 Banco Paleto Bay</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">6 – 8</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Calibre medio únicamente</span></div>
+              <div class="heist-stat"><span class="label">Rehenes</span><span class="value">Máx. 4</span></div>
+              <div class="heist-stat"><span class="label">Modo</span><span class="value">Solo a tiros</span></div>
+              <div class="heist-stat"><span class="label">Frecuencia</span><span class="value">1 vez por semana</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">🛥️ Yate Presidencial</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">8 – 10</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Cualquier armamento</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">🏛️ Banco Central</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">8 – 10</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Cualquier armamento</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">🎰 Casino</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">8 – 10</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Cualquier armamento</span></div>
+            </div>
+            <div class="heist-card">
+              <div class="heist-card-title">🔬 Robo a Humane</div>
+              <div class="heist-stat"><span class="label">Policías</span><span class="value">8 – 10</span></div>
+              <div class="heist-stat"><span class="label">Atracadores</span><span class="value">Policías − 1</span></div>
+              <div class="heist-stat"><span class="label">Tiradores</span><span class="value">Máx. 1 por bando</span></div>
+              <div class="heist-stat"><span class="label">Armas</span><span class="value">Cualquier armamento</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">3.3</span><span class="rule-title">Negociaciones durante los Atracos</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Si un bando rompe negociaciones deberá avisar al otro. Se esperará <strong>15 segundos</strong> antes de poder abrir fuego.</li>
+          <li>No se podrá añadir a nadie al rol una vez iniciado el atraco. Los participantes iniciales son los únicos que pueden intervenir.</li>
+          <li>En robos pequeños y medios, si no hay acuerdo, se usará el sistema de <strong>/dados</strong>. El número más alto gana la negociación.</li>
+          <li>Si el atracador gana la negociación, el rehén deberá salir y la policía aceptará la condición.</li>
+        </ul>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">3.4</span><span class="rule-title">Personas en el Exterior</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Los atracadores pueden tener apoyo exterior para la huida, pero <strong>siempre deberá haber un policía más que el total de delincuentes</strong> (incluyendo los del exterior).</li>
+          <li>Los delincuentes exteriores no podrán tener roles agresivos contra la policía, exceptuando al tirador. Solo pueden ayudar en la huida o realizar bloqueos.</li>
+          <li>En ningún caso se podrá incluir a civiles como terceros, ni para el bloqueo ni como tiradores.</li>
+        </ul>
+        <div class="warn-box"><p><strong>Ejemplo:</strong> en un atraco a joyería puede haber 4 policías, 1 atracador en el local y 2 en una lancha. Los del exterior solo ayudan en la huida.</p></div>
+      </div></div>
+    </section>
+
+    <!-- CAP 4 -->
+    <section class="section" id="cap4">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <h2>Proyecto y Banda</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">4.1</span><span class="rule-title">Proyecto de Banda vs. Banda</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <div class="heist-grid">
+          <div class="heist-card">
+            <div class="heist-card-title">🌱 Proyecto de Banda</div>
+            <div class="heist-stat"><span class="label">Integrantes</span><span class="value">Máx. 8</span></div>
+            <div class="heist-stat"><span class="label">Barrio</span><span class="value">Sin mapeado</span></div>
+            <div class="heist-stat"><span class="label">Puntos</span><span class="value">Básicos</span></div>
+            <div class="heist-stat"><span class="label">Atracos</span><span class="value">Solo robos menores</span></div>
+          </div>
+          <div class="heist-card">
+            <div class="heist-card-title">💀 Banda Consolidada</div>
+            <div class="heist-stat"><span class="label">Integrantes</span><span class="value">Máx. 12</span></div>
+            <div class="heist-stat"><span class="label">Barrio</span><span class="value">Entorno favorable</span></div>
+            <div class="heist-stat"><span class="label">Puntos</span><span class="value">Mapeado personalizable</span></div>
+            <div class="heist-stat"><span class="label">Atracos</span><span class="value">Todos los robos</span></div>
+          </div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- CAP 5 -->
+    <section class="section" id="cap5">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <h2>Sanciones para Bandas</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">5.1</span><span class="rule-title">Sistema de Strikes</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <p>Cuando una banda comete un fallo grave (uno o varios miembros) se le sanciona con un <strong>strike</strong>. La acumulación de <strong>3 strikes</strong> supone la retirada de la banda. Si la administración observa buena conducta durante un período determinado, puede considerar la retirada de algún strike.</p>
+        <div class="danger-box"><p><strong>Motivos de strike directo:</strong> no valoración de vida · actos delictivos con civiles · grabar ausente en 3 ocasiones (strike permanente) · entrar a otra facción sin esperar el tiempo mínimo.</p></div>
+        <ul class="example-list">
+          <li>La información de la banda y todos sus apartados deben estar debidamente actualizados. El incumplimiento puede acarrear strike y/o retirada de la organización.</li>
+          <li>Es obligatorio estar en el canal de voz de Discord de la banda mientras se esté en el servidor.</li>
+          <li>Todos los integrantes deben grabar durante actos delictivos. 3 infracciones detectadas supone strike permanente.</li>
+          <li>Está prohibido cometer actos delictivos junto con civiles.</li>
+          <li>No se pueden utilizar vehículos exclusivos en actos delictivos.</li>
+          <li>Se considera falta de interpretación abatir a una persona y luego llevarla al médico.</li>
+          <li>Entrar a otra facción sin respetar el tiempo mínimo de espera: strike a la banda y <strong>1 semana de ban</strong> a la persona infractora.</li>
+        </ul>
+        <span class="examples-label">Tiempos mínimos de espera para entrar en una banda</span>
+        <div class="wait-box">
+          <div class="wait-item"><div class="days">7</div><div class="wlabel">días</div><div class="wtype">CK Policial → Miembro</div></div>
+          <div class="wait-item"><div class="days">7</div><div class="wlabel">días</div><div class="wtype">CK Propio/Ajeno → Miembro</div></div>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- CAP 6 -->
+    <section class="section" id="cap6">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <h2>Normativa General de Bandas</h2>
+      </div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">6.1</span><span class="rule-title">Territorios y Entorno Favorable</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Para entrar en la sede/barrio de otra organización se deberá tener un motivo de peso suficientemente grande y demostrable a la administración con pruebas IC.</li>
+          <li>El entorno favorable se consigue a partir del <strong>nivel 2</strong> de banda. Permite CK automático a cualquier persona abatida en la zona, no avisar por /entorno en actos delictivos realizados en dicha zona, y abrir fuego sin rol previo de peso.</li>
+          <li>El interior de una sede es <strong>siempre entorno favorable</strong> para todas las bandas, sin importar el nivel (de puertas para dentro).</li>
+          <li>Si en una persecución la facción perseguida entra en su barrio/sede, el RDE desaparece para esa facción y la enemiga puede seguir. Si la facción enemiga cae, es PK, no CK.</li>
+          <li>Las reuniones, intercambios, pagos y similares deben realizarse en una <strong>zona neutral</strong>, fuera de cualquier rol de entorno favorable.</li>
+        </ul>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">6.2</span><span class="rule-title">Lore, Vestimenta y Vehículos</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Es obligatorio ir vestido acorde al lore de cada facción.</li>
+          <li>No se puede exigir a civiles quitarse prendas de algún color (salvo que estén causando problemas al barrio).</li>
+          <li>No se puede exigir entre bandas quitarse los colores del barrio.</li>
+          <li>El uso de coches de lore es obligatorio, salvo al cometer actos delictivos.</li>
+          <li>Los vehículos usados en actos delictivos deben representar el color de la facción de forma clara y sin nacarado (excepto roles directos con la policía como robos o secuestros).</li>
+          <li>Se pueden usar vehículos NPC para realizar atracos.</li>
+          <li>Está permitido usar cualquier vehículo para el "chill" (sin actos delictivos ni rolear como banda).</li>
+          <li>Las organizaciones deben acatarse al lore definido: interpretación de personaje, acento, vestimentas... Una banda que no siga su rol podrá ser retirada.</li>
+        </ul>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">6.3</span><span class="rule-title">Relaciones, Alianzas y Escolta</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Las bandas podrán aliarse con otras bandas.</li>
+          <li>El desarrollo de relaciones con otros barrios debe ceñirse al lore: no se puede pasar de buena relación a roles agresivos de la noche a la mañana.</li>
+          <li>Queda prohibido escoltar si estás corriendo. Solo se puede hacer parado o caminando, cogiendo al rehén de espaldas.</li>
+          <li>Queda totalmente prohibido que un miembro de una banda intente protegerse con la policía en cualquier tipo de rol.</li>
+          <li>El jefe de una banda puede realizar un CK a un integrante cuando desee sacarlo de la facción.</li>
+          <li>Para salir de una facción ilegal es obligatorio irse con un CK total. No están permitidos los PKT.</li>
+          <li>Los miembros de una banda podrán trabajar en negocios de ocio, alimentación, talleres y tiendas de electrónica, siempre respetando el lore de la facción.</li>
+        </ul>
+      </div></div>
+
+      <div class="rule-card"><div class="rule-header" onclick="toggle(this)"><span class="rule-id">6.4</span><span class="rule-title">Reportes, Actividad y Comunicación</span><svg class="rule-toggle" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="rule-body">
+        <ul class="example-list">
+          <li>Los reportes entre organizaciones ilegales se tramitarán mediante <strong>ticket-ilegal</strong> en Discord, rellenando la plantilla y adjuntando las pruebas pertinentes. El tiempo máximo para abrir un reporte es de <strong>48 horas</strong> desde que ocurrió el rol.</li>
+          <li>Para comunicarse con el encargado de bandas se debe usar el canal correspondiente de Discord.</li>
+          <li>La banda debe mantener una <strong>actividad constante</strong> en el servidor.</li>
+          <li>Si el líder de la banda sufre un CK o presenta inactividad sin justificación previa, se procederá al <strong>disband</strong> de la banda.</li>
+          <li>La policía o una banda podrán realizar CK a toda una organización si se tiene la información requerida (nombres, puestos, negocio…), siempre con aprobación de la administración.</li>
+          <li>No está permitido obtener información de trabajadores o clientes de los negocios.</li>
+          <li>En persecuciones entre facciones se permitirá pinchar ruedas tras un tiempo considerable. Para realizar un bloqueo deben pasar <strong>mínimo 5 minutos</strong> de persecución.</li>
+          <li>Cualquier comentario tóxico hacia otro usuario será sancionado con días de ban.</li>
+        </ul>
+        <div class="danger-box"><p><strong>Prohibido:</strong> No está permitido sacar información de trabajadores o clientes de los negocios para uso propio o de la banda.</p></div>
+      </div></div>
+    </section>
+
+    <div class="final-note">
+      <h3>Cláusula General de la Administración</h3>
+      <p>Toda actuación que no esté recogida en esta normativa <strong>no significa que sea válida</strong>. La Administración se reserva el derecho de decidir si una situación de rol es válida o sancionable, independientemente de si está explícitamente contemplada en el reglamento.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <p>© 2025 <span>Pixeled Community</span> · Todos los derechos reservados · Servidor FiveM +18</p>
+</footer>
+
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const icon = header.querySelector('.rule-toggle');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+  }
+  let allOpen = false;
+  function toggleAll() {
+    allOpen = !allOpen;
+    document.querySelectorAll('.rule-body').forEach(b => b.classList.toggle('open', allOpen));
+    document.querySelectorAll('.rule-toggle').forEach(i => i.classList.toggle('open', allOpen));
+    document.querySelector('.expand-btn').textContent = allOpen ? 'Contraer todo' : 'Expandir todo';
+  }
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav-chapter');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  });
+</script>
+</body>
+</html>
